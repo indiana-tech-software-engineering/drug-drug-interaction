@@ -13,7 +13,7 @@ $ git clone https://github.com/indiana-tech-software-engineering/drug-drug-inter
 Navigate to the web app directory and restore Nuget packages:
 
 ```
-$ cd drug-drug-interaction
+$ cd drug-drug-interaction/DDI.WebApp
 $ dotnet restore
 ```
 
