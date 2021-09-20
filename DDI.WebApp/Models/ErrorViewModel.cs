@@ -1,6 +1,6 @@
 using System;
 
-namespace DrugDrugInteraction.Models
+namespace DDI.WebApp.Models
 {
     public class ErrorViewModel
     {

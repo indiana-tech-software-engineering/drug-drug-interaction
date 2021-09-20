@@ -5,9 +5,9 @@ using System.Linq;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
-using DrugDrugInteraction.Models;
+using DDI.WebApp.Models;
 
-namespace DrugDrugInteraction.Controllers
+namespace DDI.WebApp.Controllers
 {
     public class HomeController : Controller
     {
