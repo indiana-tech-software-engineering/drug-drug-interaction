@@ -1,8 +1,10 @@
 ﻿using System;
+using System.Collections.Generic;
 
 namespace DDI.DrugApi
 {
-    public class Class1
+    public class example
     {
+       
     }
 }

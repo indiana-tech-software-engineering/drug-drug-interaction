@@ -1,0 +1,34 @@
+@model IEnumerable<DDI.WebApp.Models.Drug>
+
+@{
+    ViewData["Title"] = "Home Page";
+}
+
+<div class="text-center">
+    <h1 class="display-4">"Drug" Interaction</h1>
+    <p>example of the working website. search car and results will show up, otherwise nothing displays. easy to adapt</p>
+</div>
+<form>
+   <label id="thang"> Drug Field:</label>
+   <input type="text" placeholder="initial drug" class="mtr-5" name="drug" id="thang">
+   <button type="submit" class="btn-primary">subscribe</button>
+</form>
+<table class="table mt-5 hidden" >
+    <thead>
+        <tr>
+            <th scope="col">Drug Name</th>
+            <th scope="col">Interaction</th>
+        </tr>
+    </thead>
+    @foreach (var drug in Model)
+    {
+        <tr>
+            <td>@drug.drugName</td>
+            <td>@drug.side_effects</td>
+        </tr>
+    }
+</table>
+
+@section Scripts {
+<partial name="_ValidationScriptsPartial" />
+}
