@@ -1,5 +1,5 @@
 using DDI.Models;
-using System.Collections;
+using System.Collections.Generic;
 
 namespace DDI.DrugApi
 {
