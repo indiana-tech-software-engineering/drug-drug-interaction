@@ -1,30 +1,33 @@
-@model IEnumerable<DDI.WebApp.Models.Drug>
+@model IEnumerable<DDI.Models.Interaction>
 
 @{
     ViewData["Title"] = "Home Page";
 }
-
+<body>
+   
 <div class="text-center">
     <h1 class="display-4">"Drug" Interaction</h1>
-    <p>example of the working website. search car and results will show up, otherwise nothing displays. easy to adapt</p>
+    <p>example of the working website. Currently returns one drug</p>
 </div>
 <form>
    <label id="thang"> Drug Field:</label>
-   <input type="text" placeholder="initial drug" class="mtr-5" name="drug" id="thang">
-   <button type="submit" class="btn-primary">subscribe</button>
+   <input type="text" placeholder="initial drug" class="mtr-5" name="drug" id="thang" required>
+   <button type="submit" class="btn-primary">submit</button>
 </form>
-<table class="table mt-5 hidden" >
+<table class="table mt-4" col>
     <thead>
         <tr>
-            <th scope="col">Drug Name</th>
+            <th scope="col" class="col-1">Drug Name</th>
             <th scope="col">Interaction</th>
+            <th scope="col" class="col-1">extra thing?</th>
         </tr>
     </thead>
-    @foreach (var drug in Model)
+    @foreach (var interaction in Model)
     {
         <tr>
-            <td>@drug.drugName</td>
-            <td>@drug.side_effects</td>
+            <td class="th-c">@interaction.Drug.ScientificName</td>
+            <td class="th-c">@interaction.Description</td>
+            <td><button class="btn btn-danger">Subscribe</button></td>
         </tr>
     }
 </table>
@@ -32,3 +35,4 @@
 @section Scripts {
 <partial name="_ValidationScriptsPartial" />
 }
+</body>

@@ -5,6 +5,6 @@ namespace DDI.DrugApi
 {
 	public interface IDrugApi
 	{
-		List<Interaction> FetchInteractions(Drug drug);
+		List<Interaction> FetchInteractions(string drugName);
 	}
 }

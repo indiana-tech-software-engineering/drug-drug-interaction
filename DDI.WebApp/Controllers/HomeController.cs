@@ -6,16 +6,19 @@ using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
 using DDI.WebApp.Models;
+using DDI.DrugApi;
 
 namespace DDI.WebApp.Controllers
 {
     public class HomeController : Controller
     {
+       private readonly IDrugApi _drugApi;
         private readonly ILogger<HomeController> _logger;
 
-        public HomeController(ILogger<HomeController> logger)
+        public HomeController(ILogger<HomeController> logger, IDrugApi drugApi)
         {
             _logger = logger;
+            _drugApi = drugApi;
         }
 
         public IActionResult Index()
@@ -28,21 +31,9 @@ namespace DDI.WebApp.Controllers
             return View();
         }
 
-        public List<Drug> example(string dname){
-           // TODO: create api function to replace this one. right now this function creates the list and exports it.
-            List<Drug> interacted = new List<Drug>();
-            if(dname == "car") {
-               for(int i = 1; i<5;i++) {
-                  interacted.Add(new Drug{drugName = dname + " " + i, side_effects = "testeffect"});
-               }
-            }
-           return interacted;
-        }
         public ActionResult drug_searcher(string drug) {
-           //only used to get the ID from the URL. sends it off to a function which does most the job
-           // could probably have done it more elegantly but it works
-           return View(example(drug));
-           //TODO: possibly split into two pages for cleanly-ness (?)
+           return View(_drugApi.FetchInteractions(drug));
+           
         }
          
 
