@@ -19,7 +19,7 @@ namespace DDI.DrugApi
 		
 		}
 		public String doTheThing(string drugName) {
-			 WebRequest request = WebRequest.Create (BaseUri+"/REST/rxcui.json?name"+drugName+"&search=1");
+			 WebRequest request = WebRequest.Create (BaseUri+"/REST/rxcui.json?name="+drugName+"&search=1");
             // If required by the server, set the credentials.
             request.Credentials = CredentialCache.DefaultCredentials;
             // Get the response.
