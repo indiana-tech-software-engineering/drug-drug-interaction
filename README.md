@@ -31,5 +31,12 @@ dotnet run
 * ~~DrugBank~~ creative commons license
 * DailyMed
 
+### Selected API
+
+NIH - National Library of Medicine
+
+link: https://lhncbc.nlm.nih.gov/RxNav/APIs/api-Interaction.findDrugInteractions.html
+
+
 ### Frontends
 * ???
