@@ -1,10 +1,9 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Diagnostics;
-using System.Linq;
-using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
+using DDI.Models;
 using DDI.WebApp.Models;
 using DDI.DrugApi;
 
@@ -30,10 +29,11 @@ namespace DDI.WebApp.Controllers
         {
             return View();
         }
-
+		
         public ActionResult drug_searcher(string drug) {
-           return View(_drugApi.FetchInteractions(drug));
-           
+			if(drug != null) {
+				return View(_drugApi.FetchInteractions(drug));
+			} return View(new List<Interaction>());
         }
          
 

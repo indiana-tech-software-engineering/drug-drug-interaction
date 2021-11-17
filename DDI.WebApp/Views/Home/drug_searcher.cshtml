@@ -8,6 +8,7 @@
 <div class="text-center">
     <h1 class="display-4">"Drug" Interaction</h1>
     <p>example of the working website. Currently returns one drug</p>
+	<sub>if you're reading this you've probably failed the drug test btw.</sub>
 </div>
 <form>
    <label id="thang"> Drug Field:</label>
@@ -17,19 +18,21 @@
 <table class="table mt-4" col>
     <thead>
         <tr>
+			<th scope="col" class="col-1">Drug ID</th>
             <th scope="col" class="col-1">Drug Name</th>
             <th scope="col">Interaction</th>
             <th scope="col" class="col-1">extra thing?</th>
         </tr>
     </thead>
-    @foreach (var interaction in Model)
-    {
-        <tr>
-            <td class="th-c">@interaction.Drug.ScientificName</td>
-            <td class="th-c">@interaction.Description</td>
-            <td><button class="btn btn-danger">Subscribe</button></td>
-        </tr>
-    }
+	@foreach (var interaction in Model)
+	{
+		<tr>
+			<td class="th-c">@interaction.Drug.rxnormId</td>
+			<td class="th-c">@interaction.Drug.ScientificName</td>
+			<td class="th-c">@interaction.Description</td>
+			<td><button class="btn btn-danger">Subscribe</button></td>
+		</tr>
+	}
 </table>
 
 @section Scripts {

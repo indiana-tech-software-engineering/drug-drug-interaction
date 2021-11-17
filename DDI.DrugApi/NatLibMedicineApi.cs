@@ -17,7 +17,6 @@ namespace DDI.DrugApi
 		}
 		public List<Interaction> FetchInteractions(string drugName)
 		{
-			_drugClient.doTheThing(drugName);
 			return new List<Interaction>
 			
 			{
@@ -26,7 +25,8 @@ namespace DDI.DrugApi
 					Drug = new Drug
 					{
 						CommonName = "Tylenol",
-						ScientificName = "aceteminophin",
+						rxnormId = _drugClient.fetchDrugID(drugName),
+						ScientificName = drugName,
 					},
 					Description = "This does things.",
 				},
@@ -35,6 +35,7 @@ namespace DDI.DrugApi
 					Drug = new Drug
 					{
 						CommonName = "Orange",
+						rxnormId = "2314124",
 						ScientificName = "Juice",
 					},
 					Description = "corn.",
