@@ -20,12 +20,14 @@ namespace DDI.DrugApi
 		}
 		public void FunctionRun(){}
 		public void FetchDrugInteractions(){}
+
 		public String fetchDrugID(string drugName) {
-			WebRequest request = WebRequest.Create (BaseUri+"/REST/rxcui.json?name="+drugName+"&search=1");
+			WebRequest request = WebRequest.Create (BaseUri+"/REST/rxcui.json?name="+drugName);
             HttpWebResponse response = (HttpWebResponse)request.GetResponse ();
             Stream dataStream = response.GetResponseStream ();
             StreamReader reader = new StreamReader (dataStream);
             string responseFromServer = reader.ReadToEnd ();
+
 			var id = Utf8ReaderFromAPI.idTranslation(responseFromServer);
 			Console.WriteLine(id);
 
