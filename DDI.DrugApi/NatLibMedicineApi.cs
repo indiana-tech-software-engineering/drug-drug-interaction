@@ -23,22 +23,32 @@ namespace DDI.DrugApi
 				return new List<Interaction>();
 
 			var result = await _natLibMedicineHttpClient.FetchDrugIdByName(drugName);
+			var fresult = await _natLibMedicineHttpClient.FetchDrugInteraction(result.DrugId[0]);
+			
+			if (fresult.TypeGroups == null)
+				return new List<Interaction>();
 
 			if (result?.DrugId == null || result.DrugId.Count == 0)
 				return new List<Interaction>();
-
-			return new List<Interaction>
+		
+			var list = new List<Interaction>();
+			foreach (var item in fresult.TypeGroups[0].Types[0].Interactions)
 			{
-				new Interaction
-				{
-					Drug = new Drug
+				list.Add
+				(
+					new Interaction
 					{
-						Id = result.DrugId[0],
-						ScientificName = drugName,
-						CommonName = $"Common {drugName}",
+						Drug = new Drug
+						{
+							Id = item.Drugs[1].MinimumDetails.DrugId,
+							ScientificName = item.Drugs[1].SourceDetails.Name,
+							CommonName = $"Common {item.Drugs[1].SourceDetails.Name}",
+						},
+						Description = item.Description
 					}
-				}
-			};
+				);
+			}
+			return list;
 		}
 	}
 }
