@@ -7,7 +7,7 @@ namespace DDI.WebApp
 	{
 		public void InjectDependencies(IServiceCollection services)
 		{
-			services.AddScoped<IDrugApi, NatLibMedicineApi>();
+			services.AddScoped<IDrugApi, NlmDrugApi>();
 		}
 	}
 }
