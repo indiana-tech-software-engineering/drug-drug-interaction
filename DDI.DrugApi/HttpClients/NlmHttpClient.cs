@@ -29,6 +29,6 @@ namespace DDI.DrugApi.HttpClients
 				: null;
 
 		private async Task<T> GetAsync<T>(string path) =>
-			await _httpClient.GetFromJsonAsync<T>(path);
+			await _httpClient.GetFromJsonAsync<T>($"{BaseUrl}{path}");
 	}
 }

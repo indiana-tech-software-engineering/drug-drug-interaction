@@ -1,0 +1,16 @@
+@model IEnumerable<DDI.Models.Interaction>
+
+@{
+	ViewData["Title"] = "Search for Drug Interactions";
+}
+
+<table>
+	@foreach (var interaction in Model)
+	{
+		<tr>
+			<td>@interaction.Drug.Id</td>
+			<td>@interaction.Drug.Name</td>
+			<td>@interaction.Description</td>
+		</tr>
+	}
+</table>
