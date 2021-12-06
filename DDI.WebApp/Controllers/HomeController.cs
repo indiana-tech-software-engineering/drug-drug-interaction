@@ -21,11 +21,10 @@ namespace DDI.WebApp.Controllers
 			_logger = logger;
 		}
 
-		public IActionResult Index() =>
-			View();
-
-		public async Task<IActionResult> Search(string drugName) =>
-			View(await _drugApi.FetchDrugInteractionsByDrugNameAsync(drugName));
+		public async Task<IActionResult> Index(string drugName) => View((
+			await _drugApi.FetchIsDrugValidByDrugNameAsync(drugName),
+			await _drugApi.FetchDrugInteractionsByDrugNameAsync(drugName)
+		));
 
 		[ResponseCache(Duration = 0, Location = ResponseCacheLocation.None, NoStore = true)]
 		public IActionResult Error() =>
