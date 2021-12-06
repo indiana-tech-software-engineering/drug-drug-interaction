@@ -24,9 +24,6 @@ namespace DDI.WebApp.Controllers
 		public IActionResult Index() =>
 			View();
 
-		public IActionResult Privacy() =>
-			View();
-
 		public async Task<IActionResult> Search(string drugName) =>
 			View(await _drugApi.FetchDrugInteractionsByDrugNameAsync(drugName));
 
