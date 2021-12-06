@@ -2,10 +2,10 @@ using DDI.Models;
 using System.Collections.Generic;
 using System.Threading.Tasks;
 
-namespace DDI.DrugApi
+namespace DDI.DrugApi.Apis
 {
 	public interface IDrugApi
 	{
-		Task<List<Interaction>> FetchInteractionsAsync(Drug drug);
+		Task<List<Interaction>> FetchDrugInteractionsByDrugNameAsync(string drugName);
 	}
 }
