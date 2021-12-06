@@ -6,6 +6,6 @@ namespace DDI.DrugApi.Apis
 {
 	public interface IDrugApi
 	{
-		Task<List<Interaction>> FetchDrugInteractionsByDrugNameAsync(string drugName);
+		Task<IEnumerable<Interaction>> FetchDrugInteractionsByDrugNameAsync(string drugName);
 	}
 }
