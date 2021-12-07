@@ -9,7 +9,8 @@ namespace DDI.WebApp
 	{
 		public void InjectDependencies(IServiceCollection services)
 		{
-			services.AddSingleton<NlmHttpClient>();
+			services.AddSingleton<HttpClient>();
+			services.AddScoped<NlmHttpClient>();
 			services.AddScoped<IDrugApi, NlmDrugApi>();
 		}
 	}

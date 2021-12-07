@@ -12,9 +12,9 @@ namespace DDI.DrugApi.HttpClients
 
 		private readonly HttpClient _httpClient;
 
-		public NlmHttpClient()
+		public NlmHttpClient(HttpClient httpClient)
 		{
-			_httpClient = new HttpClient();
+			_httpClient = httpClient;
 		}
 
 		public virtual async Task<DrugIdResult> FetchDrugIdByName(string drugName) =>
