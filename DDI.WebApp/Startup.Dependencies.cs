@@ -1,4 +1,6 @@
-using DDI.DrugApi;
+using System.Net.Http;
+using DDI.DrugApi.Apis;
+using DDI.DrugApi.HttpClients;
 using Microsoft.Extensions.DependencyInjection;
 
 namespace DDI.WebApp
@@ -7,7 +9,8 @@ namespace DDI.WebApp
 	{
 		public void InjectDependencies(IServiceCollection services)
 		{
-			services.AddScoped<IDrugApi, NatLibMedicineApi>();
+			services.AddSingleton<NlmHttpClient>();
+			services.AddScoped<IDrugApi, NlmDrugApi>();
 		}
 	}
 }

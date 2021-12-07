@@ -7,7 +7,7 @@
 			"type": "process",
 			"args": [
 				"build",
-				"${workspaceFolder}/DrugDrugInteraction/DrugDrugInteraction.csproj",
+				"${workspaceFolder}/DDI.WebApp/DDI.WebApp.csproj",
 				"/property:GenerateFullPaths=true",
 				"/consoleloggerparameters:NoSummary"
 			],
@@ -19,7 +19,7 @@
 			"type": "process",
 			"args": [
 				"publish",
-				"${workspaceFolder}/DrugDrugInteraction/DrugDrugInteraction.csproj",
+				"${workspaceFolder}/DDI.WebApp/DDI.WebApp.csproj",
 				"/property:GenerateFullPaths=true",
 				"/consoleloggerparameters:NoSummary"
 			],
@@ -32,7 +32,7 @@
 			"args": [
 				"watch",
 				"run",
-				"${workspaceFolder}/DrugDrugInteraction/DrugDrugInteraction.csproj",
+				"${workspaceFolder}/DDI.WebApp/DDI.WebApp.csproj",
 				"/property:GenerateFullPaths=true",
 				"/consoleloggerparameters:NoSummary"
 			],

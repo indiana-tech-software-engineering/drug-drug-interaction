@@ -1,8 +1,116 @@
-﻿@{
-    ViewData["Title"] = "Home Page";
+@model (bool, IEnumerable<DDI.Models.Interaction>)
+
+@{
+	var (isDrugNameValid, interactions) = Model;
+	var drugName = (string)Context.Request.Query["drugName"];
+
+	var isQueryEmpty = string.IsNullOrEmpty(drugName);
+	var isResultsEmpty = interactions == null || interactions.ToList().Count == 0;
+
+	ViewData["Title"] = isQueryEmpty
+		? "Search for Drug Interactions"
+		: $"Results for \"{drugName}\"";
 }
 
-<div class="text-center">
-    <h1 class="display-4">Welcome</h1>
-    <p>Learn about <a href="https://docs.microsoft.com/aspnet/core">building Web apps with ASP.NET Core</a>.</p>
-</div>
+@if (isQueryEmpty)
+{
+	<div class="jumbotron">
+
+		<h1 class="display-4">
+			Search for Drug Interactions
+		</h1>
+		<p class="lead">
+			Discover interactions between drugs using the National Library of
+			Medicine's public database.
+		</p>
+
+		<hr class="my-4">
+
+		<form>
+			<div class="form-group">
+				<label for="drugName">Drug name</label>
+				<input required spellcheck
+					placeholder="Enter drug name"
+					aria-describedby="drugNameHelp"
+					class="form-control"
+					value="@drugName"
+					name="drugName"
+					id="drugName"
+					type="text"
+				>
+				<small id="drugNameHelp" class="form-text text-muted">
+					Drug name must be an exact match to return results.
+				</small>
+			</div>
+			<button type="submit" class="btn btn-primary">
+				Search
+			</button>
+		</form>
+	</div>
+}
+else
+{
+	<h1 class="mt-2">
+		Search for Drug Interactions
+	</h1>
+
+	<form class="mt-2">
+		<div class="form-group">
+			<label for="drugName">Drug name</label>
+			<input required spellcheck
+				placeholder="Enter drug name"
+				aria-describedby="drugNameHelp"
+				class="form-control"
+				value="@drugName"
+				name="drugName"
+				id="drugName"
+				type="text"
+			>
+			<small id="drugNameHelp" class="form-text text-muted">
+				Drug name must be an exact match to return results.
+			</small>
+		</div>
+		<button type="submit" class="btn btn-primary">
+			Search
+		</button>
+	</form>
+
+	<hr class="my-4">
+
+	<h2>Results for "@drugName"</h2>
+
+	@if (!isDrugNameValid)
+	{
+		<p>
+			Drug with name "@drugName" does not exist in the National Library
+			of Medicine database. If you expected to find this drug, double
+			check the spelling and try again.
+		</p>
+	}
+	else if (isResultsEmpty)
+	{
+		<p>
+			No drug interactions for "@drugName" found.
+		</p>
+	}
+	else
+	{
+		<table class="table mt-4" col>
+			<thead>
+				<tr>
+					<th scope="col" class="col-1">NLM ID</th>
+					<th scope="col" class="col-1">Name</th>
+					<th scope="col">Description</th>
+				</tr>
+			</thead>
+			@foreach (var interaction in interactions)
+			{
+				<tr>
+					<td class="th-c">@interaction.Drug.Id</td>
+					<td class="th-c">@interaction.Drug.Name</td>
+					<td class="th-c">@interaction.Description</td>
+				</tr>
+			}
+		</table>
+	}
+}
