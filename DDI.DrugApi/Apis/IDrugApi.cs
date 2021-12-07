@@ -7,6 +7,6 @@ namespace DDI.DrugApi.Apis
 	public interface IDrugApi
 	{
 		Task<bool> FetchIsDrugValidByDrugNameAsync(string drugName);
-		Task<IEnumerable<Interaction>> FetchDrugInteractionsByDrugNameAsync(string drugName);
+		Task<List<Interaction>> FetchDrugInteractionsByDrugNameAsync(string drugName);
 	}
 }
