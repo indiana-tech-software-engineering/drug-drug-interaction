@@ -114,9 +114,9 @@ namespace DDI.DrugApi.Tests.Apis
 
 			var result = (await _nlmDrugApi.FetchDrugInteractionsByDrugNameAsync(drugName))[0];
 
-			Assert.Equal(result.Drug.Id, otherDrugId);
-			Assert.Equal(result.Drug.Name, otherDrugName);
-			Assert.Equal(result.Description, otherDescription);
+			Assert.Equal(otherDrugId, result.Drug.Id);
+			Assert.Equal(otherDrugName, result.Drug.Name);
+			Assert.Equal(otherDescription, result.Description);
 		}
 
 		private void Mock_NlmHttpClient_FetchDrugIdByName_BadDrugName(string drugName) =>
