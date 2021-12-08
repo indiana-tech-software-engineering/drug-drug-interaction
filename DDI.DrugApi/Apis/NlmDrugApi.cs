@@ -28,7 +28,14 @@ namespace DDI.DrugApi.Apis
 			var drugId = await FetchDrugIdByName(drugName);
 			var interactionResults = await _nlmHttpClient.FetchDrugInteractionsByDrugId(drugId);
 
-			return interactionResults?.Select(AsInteractions).ToList() ?? new List<Interaction>();
+			var results = interactionResults
+				?.GroupBy(x => x.Drugs[1].SourceDetails.Id)
+				.Select(x => x.First())
+				.Select(AsInteractions)
+				.OrderBy(x => x.Drug.Name)
+				.ToList();
+
+			return results ?? new List<Interaction>();
 		}
 
 		private async Task<int?> FetchDrugIdByName(string drugName)

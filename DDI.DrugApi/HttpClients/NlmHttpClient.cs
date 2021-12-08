@@ -24,7 +24,7 @@ namespace DDI.DrugApi.HttpClients
 
 		public virtual async Task<List<InteractionResult>> FetchDrugInteractionsByDrugId(int? drugId) =>
 			drugId != null
-				? (await GetAsync<InteractionWrapper>($"/REST/interaction/interaction.json?rxcui={drugId}&sources=ONCHigh"))
+				? (await GetAsync<InteractionWrapper>($"/REST/interaction/interaction.json?rxcui={drugId}&sources=DrugBank"))
 					.TypeGroups?[0]?.Types?[0]?.Interactions
 				: null;
 

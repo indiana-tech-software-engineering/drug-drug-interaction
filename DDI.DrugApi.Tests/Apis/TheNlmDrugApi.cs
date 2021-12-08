@@ -1,4 +1,6 @@
+using System;
 using System.Collections.Generic;
+using System.Linq;
 using System.Threading.Tasks;
 using DDI.DrugApi.Apis;
 using DDI.DrugApi.HttpClients;
@@ -110,13 +112,43 @@ namespace DDI.DrugApi.Tests.Apis
 			string otherDescription = "This is a description.";
 
 			Mock_NlmHttpClient_FetchDrugIdByName_GoodDrugName(drugName, drugId);
-			Mock_NlmHttpClient_FetchDrugInteractionsByDrugId_GoodDrugId_WithInteraction(drugId, otherDrugName, otherDrugId, otherDescription);
+			Mock_NlmHttpClient_FetchDrugInteractionsByDrugId_GoodDrugId_WithInteractions(drugId, new List<Tuple<int, string, string, string>>
+			{
+				new Tuple<int, string, string, string>(otherDrugId, otherDrugName, otherDescription, "")
+			});
 
 			var result = (await _nlmDrugApi.FetchDrugInteractionsByDrugNameAsync(drugName))[0];
 
 			Assert.Equal(otherDrugId, result.Drug.Id);
 			Assert.Equal(otherDrugName, result.Drug.Name);
 			Assert.Equal(otherDescription, result.Description);
+		}
+
+		[Fact]
+		public async Task WhenFetchingInteractions_GivenGoodDrugName_GivenDuplicateInteractions_ReturnsDistinctInteractions()
+		{
+			int drugId = 12345;
+			string drugName = "Good Drug Name";
+
+			string otherDrugName_1 = "Drug 1";
+			string otherDrugName_2 = "Drug 2";
+
+			string otherId_1 = "Other ID #1";
+			string otherId_2 = "Other ID #2";
+
+			Mock_NlmHttpClient_FetchDrugIdByName_GoodDrugName(drugName, drugId);
+			Mock_NlmHttpClient_FetchDrugInteractionsByDrugId_GoodDrugId_WithInteractions(drugId, new List<Tuple<int, string, string, string>>
+			{
+				new Tuple<int, string, string, string>(1, otherDrugName_1, "Description 1", otherId_1),
+				new Tuple<int, string, string, string>(1, "Drug 2", "Description 2", otherId_1),
+				new Tuple<int, string, string, string>(1, otherDrugName_2, "Description 3", otherId_2),
+			});
+
+			var results = await _nlmDrugApi.FetchDrugInteractionsByDrugNameAsync(drugName);
+
+			Assert.Equal(2, results.Count);
+			Assert.Equal(otherDrugName_1, results[0].Drug.Name);
+			Assert.Equal(otherDrugName_2, results[1].Drug.Name);
 		}
 
 		private void Mock_NlmHttpClient_FetchDrugIdByName_BadDrugName(string drugName) =>
@@ -143,26 +175,29 @@ namespace DDI.DrugApi.Tests.Apis
 			A.CallTo(() => _fakeNlmHttpClient.FetchDrugInteractionsByDrugId(drugId))
 				.Returns(new List<InteractionResult>());
 
-		private void Mock_NlmHttpClient_FetchDrugInteractionsByDrugId_GoodDrugId_WithInteraction(int drugId, string otherDrugName, int otherDrugId, string otherDescription) =>
+		private void Mock_NlmHttpClient_FetchDrugInteractionsByDrugId_GoodDrugId_WithInteractions(int drugId, List<Tuple<int, string, string, string>> otherDrugs) =>
 			A.CallTo(() => _fakeNlmHttpClient.FetchDrugInteractionsByDrugId(drugId))
-				.Returns(new List<InteractionResult>
-				{
-					new InteractionResult
+				.Returns(otherDrugs
+					.Select(interaction => new InteractionResult
 					{
-						Description = otherDescription,
+						Description = interaction.Item3,
 						Drugs = new List<InteractionDrug>
-						{
-							new InteractionDrug(),
-							new InteractionDrug
 							{
-								MinimumDetails = new InteractionMinimumDetails
+								new InteractionDrug(),
+								new InteractionDrug
 								{
-									DrugId = otherDrugId,
-									Name = otherDrugName,
-								},
+									MinimumDetails = new InteractionMinimumDetails
+									{
+										DrugId = interaction.Item1,
+										Name = interaction.Item2,
+									},
+									SourceDetails = new InteractionSourceDetails
+									{
+										Id = interaction.Item4,
+									}
+								}
 							}
-						},
-					},
-				});
+					})
+					.ToList());
 	}
 }
