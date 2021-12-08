@@ -16,13 +16,13 @@ namespace DDI.WebApp.Controllers
 			_drugApi = drugApi;
 		}
 
-		public async Task<IActionResult> Index(string drugName) => View((
+		public virtual async Task<IActionResult> Index(string drugName) => View((
 			await _drugApi.FetchIsDrugValidByDrugNameAsync(drugName),
 			await _drugApi.FetchDrugInteractionsByDrugNameAsync(drugName)
 		));
 
 		[ResponseCache(Duration = 0, Location = ResponseCacheLocation.None, NoStore = true)]
-		public IActionResult Error() =>
+		public virtual IActionResult Error() =>
 			View(GetErrorDetails());
 
 		private ErrorViewModel GetErrorDetails() => new ErrorViewModel
