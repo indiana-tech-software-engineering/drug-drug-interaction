@@ -30,8 +30,9 @@ namespace DDI.DrugApi.Apis
 
 			var results = interactionResults
 				?.GroupBy(x => x.Drugs[1].SourceDetails.Id)
-				.Select(y => y.First())
+				.Select(x => x.First())
 				.Select(AsInteractions)
+				.OrderBy(x => x.Drug.Name)
 				.ToList();
 
 			return results ?? new List<Interaction>();
