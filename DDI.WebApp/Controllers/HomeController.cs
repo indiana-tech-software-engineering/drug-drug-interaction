@@ -1,6 +1,5 @@
 ﻿using System.Diagnostics;
 using Microsoft.AspNetCore.Mvc;
-using Microsoft.Extensions.Logging;
 using DDI.WebApp.Models;
 using DDI.DrugApi.Apis;
 using System.Threading.Tasks;
