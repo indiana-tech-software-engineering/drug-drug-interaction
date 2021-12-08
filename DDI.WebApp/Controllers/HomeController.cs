@@ -9,16 +9,13 @@ namespace DDI.WebApp.Controllers
 {
 	public class HomeController : Controller
 	{
-		private readonly ILogger<HomeController> _logger;
 		private readonly IDrugApi _drugApi;
 
 		public HomeController(
-			ILogger<HomeController> logger,
 			IDrugApi drugApi
 		)
 		{
 			_drugApi = drugApi;
-			_logger = logger;
 		}
 
 		public async Task<IActionResult> Index(string drugName) => View((
