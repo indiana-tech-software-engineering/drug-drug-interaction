@@ -10,9 +10,9 @@ namespace DDI.DrugApi.HttpClients
 	{
 		private const string BaseUrl = "https://rxnav.nlm.nih.gov";
 
-		private readonly HttpClient _httpClient;
+		private readonly DefaultHttpClient _httpClient;
 
-		public NlmHttpClient(HttpClient httpClient)
+		public NlmHttpClient(DefaultHttpClient httpClient)
 		{
 			_httpClient = httpClient;
 		}
