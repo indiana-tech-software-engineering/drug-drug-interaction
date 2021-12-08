@@ -10,11 +10,11 @@ namespace DDI.DrugApi.HttpClients
 	{
 		private const string BaseUrl = "https://rxnav.nlm.nih.gov";
 
-		private readonly HttpClient _httpClient;
+		private readonly DefaultHttpClient _httpClient;
 
-		public NlmHttpClient()
+		public NlmHttpClient(DefaultHttpClient httpClient)
 		{
-			_httpClient = new HttpClient();
+			_httpClient = httpClient;
 		}
 
 		public virtual async Task<DrugIdResult> FetchDrugIdByName(string drugName) =>

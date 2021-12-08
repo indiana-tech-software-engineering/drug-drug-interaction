@@ -16,10 +16,11 @@ namespace DDI.DrugApi.Apis
 			_nlmHttpClient = nlmHttpClient;
 		}
 
-		public async Task<bool> FetchIsDrugValidByDrugNameAsync(string drugName) =>
-			await FetchDrugIdByName(drugName) != null;
+		public virtual async Task<bool> FetchIsDrugValidByDrugNameAsync(string drugName) =>
+			!string.IsNullOrEmpty(drugName)
+				&& await FetchDrugIdByName(drugName) != null;
 
-		public async Task<IEnumerable<Interaction>> FetchDrugInteractionsByDrugNameAsync(string drugName)
+		public virtual async Task<List<Interaction>> FetchDrugInteractionsByDrugNameAsync(string drugName)
 		{
 			if (string.IsNullOrEmpty(drugName))
 				return new List<Interaction>();
@@ -27,7 +28,7 @@ namespace DDI.DrugApi.Apis
 			var drugId = await FetchDrugIdByName(drugName);
 			var interactionResults = await _nlmHttpClient.FetchDrugInteractionsByDrugId(drugId);
 
-			return interactionResults?.Select(AsInteractions) ?? new List<Interaction>();
+			return interactionResults?.Select(AsInteractions).ToList() ?? new List<Interaction>();
 		}
 
 		private async Task<int?> FetchDrugIdByName(string drugName)
