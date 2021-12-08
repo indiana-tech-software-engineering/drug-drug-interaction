@@ -11,9 +11,7 @@ namespace DDI.WebApp.Controllers
 	{
 		private readonly IDrugApi _drugApi;
 
-		public HomeController(
-			IDrugApi drugApi
-		)
+		public HomeController(IDrugApi drugApi)
 		{
 			_drugApi = drugApi;
 		}
