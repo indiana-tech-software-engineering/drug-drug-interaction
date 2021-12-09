@@ -1,7 +1,11 @@
-﻿$("#drugSearch").on("input", function ()
+﻿const drugNameCell = '.drug-name'
+const searchInput = '#drugSearch'
+const dataTable = '#dataTable'
+
+$(searchInput).on("input", function ()
 {
 	const query = $(this).val()
-	const items = $('.drug-name')
+	const items = $(drugNameCell)
 		.toArray()
 		.map(x => x.innerText)
 
@@ -17,21 +21,33 @@
 			.map(({ item, score }) => ({ [item]: score }))
 			.reduce((x, y) => ({ ...x, ...y }), {})
 
-		$(".drug-name")
+		const getScore = item => scores[item] ?? -1
+
+		$(drugNameCell)
 			.filter(function () { return results.includes($(this).text()) })
 			.parent()
 			.show()
 
-		$(".drug-name")
+		$(drugNameCell)
 			.filter(function () { return !results.includes($(this).text()) })
 			.parent()
 			.hide()
+
+		$(dataTable)
+			.find('.drug')
+			.sort(function (a, b) { return getScore($(drugNameCell, a).text()) > getScore($(drugNameCell, b).text()) ? 1 : -1 })
+			.appendTo($(dataTable))
 	}
 	else
 	{
-		$(".drug-name")
+		$(drugNameCell)
 			.parent()
 			.show()
+
+		$(dataTable)
+			.find('.drug')
+			.sort(function (a, b) { return $(drugNameCell, a).text().localeCompare($(drugNameCell, b).text()) })
+			.appendTo($(dataTable))
 	}
 })
 

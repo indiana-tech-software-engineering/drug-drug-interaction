@@ -77,10 +77,9 @@ else
 
 	<hr class="my-4">
 
-	<h2>Results for "@drugName"</h2>
-
 	@if (!isDrugNameValid)
 	{
+		<h2>"@drugName" not found</h2>
 		<p>
 			Drug with name "@drugName" does not exist in the National Library
 			of Medicine database. If you expected to find this drug, double
@@ -89,20 +88,24 @@ else
 	}
 	else if (isResultsEmpty)
 	{
+		<h2>No results for "@drugName"</h2>
 		<p>
 			No drug interactions for "@drugName" found.
 		</p>
 	}
 	else
 	{
+		<h2>Results for "@drugName"</h2>
+
 		<div class="form-group">
 			<input autofocus
-				placeholder="Search for a specific drug"
+				placeholder="Filter results by drug name"
 				class="form-control"
 				id="drugSearch"
 				type="text"
 			>
 		</div>
+
 		<table class="table mt-4" col id="dataTable">
 			<thead>
 				<tr>
@@ -113,7 +116,7 @@ else
 			</thead>
 			@foreach (var interaction in interactions)
 			{
-				<tr>
+				<tr class='drug'>
 					<td class="th-c drug-id">@interaction.Drug.Id</td>
 					<td class="th-c drug-name">@interaction.Drug.Name</td>
 					<td class="th-c drug-description">@interaction.Description</td>
