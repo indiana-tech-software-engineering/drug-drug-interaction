@@ -8,8 +8,8 @@
 	var isResultsEmpty = interactions == null || interactions.ToList().Count == 0;
 
 	ViewData["Title"] = isQueryEmpty
-	? "Search for Drug Interactions"
-	: $"Results for \"{drugName}\"";
+		? "Search for Drug Interactions"
+		: $"Results for \"{drugName}\"";
 }
 
 @if (isQueryEmpty)
@@ -34,7 +34,7 @@
 					placeholder="Enter drug name"
 					class="form-control"
 					value="@drugName"
-					name="drugName" 
+					name="drugName"
 					id="drugName"
 					type="text"
 				>
