@@ -8,8 +8,8 @@
 	var isResultsEmpty = interactions == null || interactions.ToList().Count == 0;
 
 	ViewData["Title"] = isQueryEmpty
-		? "Search for Drug Interactions"
-		: $"Results for \"{drugName}\"";
+	? "Search for Drug Interactions"
+	: $"Results for \"{drugName}\"";
 }
 
 @if (isQueryEmpty)
@@ -29,12 +29,12 @@
 		<form>
 			<div class="form-group">
 				<label for="drugName">Drug name</label>
-				<input required spellcheck
-					placeholder="Enter drug name"
+				<input autofocus required spellcheck
 					aria-describedby="drugNameHelp"
+					placeholder="Enter drug name"
 					class="form-control"
 					value="@drugName"
-					name="drugName"
+					name="drugName" 
 					id="drugName"
 					type="text"
 				>
@@ -58,8 +58,8 @@ else
 		<div class="form-group">
 			<label for="drugName">Drug name</label>
 			<input required spellcheck
-				placeholder="Enter drug name"
 				aria-describedby="drugNameHelp"
+				placeholder="Enter drug name"
 				class="form-control"
 				value="@drugName"
 				name="drugName"
@@ -82,20 +82,28 @@ else
 	@if (!isDrugNameValid)
 	{
 		<p>
-			Drug with name "@drugName" does not exist in the National Library
-			of Medicine database. If you expected to find this drug, double
-			check the spelling and try again.
-		</p>
+	Drug with name "@drugName" does not exist in the National Library
+	of Medicine database. If you expected to find this drug, double
+	check the spelling and try again.
+</p>
 	}
 	else if (isResultsEmpty)
 	{
 		<p>
-			No drug interactions for "@drugName" found.
-		</p>
+	No drug interactions for "@drugName" found.
+</p>
 	}
 	else
 	{
-		<table class="table mt-4" col>
+		<div class="form-group">
+			<input autofocus
+				placeholder="Search for a specific drug"
+				class="form-control"
+				id="drugSearch"
+				type="text"
+			>
+		</div>
+		<table class="table mt-4" col id="dataTable">
 			<thead>
 				<tr>
 					<th scope="col" class="col-1">NLM ID</th>
@@ -106,9 +114,9 @@ else
 			@foreach (var interaction in interactions)
 			{
 				<tr>
-					<td class="th-c">@interaction.Drug.Id</td>
-					<td class="th-c">@interaction.Drug.Name</td>
-					<td class="th-c">@interaction.Description</td>
+					<td class="th-c drug-id">@interaction.Drug.Id</td>
+					<td class="th-c drug-name">@interaction.Drug.Name</td>
+					<td class="th-c drug-description">@interaction.Description</td>
 				</tr>
 			}
 		</table>
