@@ -29,9 +29,9 @@
 		<form>
 			<div class="form-group">
 				<label for="drugName">Drug name</label>
-				<input required spellcheck
-					placeholder="Enter drug name"
+				<input autofocus required spellcheck
 					aria-describedby="drugNameHelp"
+					placeholder="Enter drug name"
 					class="form-control"
 					value="@drugName"
 					name="drugName"
@@ -58,8 +58,8 @@ else
 		<div class="form-group">
 			<label for="drugName">Drug name</label>
 			<input required spellcheck
-				placeholder="Enter drug name"
 				aria-describedby="drugNameHelp"
+				placeholder="Enter drug name"
 				class="form-control"
 				value="@drugName"
 				name="drugName"
@@ -77,10 +77,9 @@ else
 
 	<hr class="my-4">
 
-	<h2>Results for "@drugName"</h2>
-
 	@if (!isDrugNameValid)
 	{
+		<h2>"@drugName" not found</h2>
 		<p>
 			Drug with name "@drugName" does not exist in the National Library
 			of Medicine database. If you expected to find this drug, double
@@ -89,13 +88,25 @@ else
 	}
 	else if (isResultsEmpty)
 	{
+		<h2>No results for "@drugName"</h2>
 		<p>
 			No drug interactions for "@drugName" found.
 		</p>
 	}
 	else
 	{
-		<table class="table mt-4" col>
+		<h2>Results for "@drugName"</h2>
+
+		<div class="form-group">
+			<input autofocus
+				placeholder="Filter results by drug name"
+				class="form-control"
+				id="drugSearch"
+				type="text"
+			>
+		</div>
+
+		<table class="table mt-4" col id="dataTable">
 			<thead>
 				<tr>
 					<th scope="col" class="col-1">NLM ID</th>
@@ -105,10 +116,10 @@ else
 			</thead>
 			@foreach (var interaction in interactions)
 			{
-				<tr>
-					<td class="th-c">@interaction.Drug.Id</td>
-					<td class="th-c">@interaction.Drug.Name</td>
-					<td class="th-c">@interaction.Description</td>
+				<tr class='drug'>
+					<td class="th-c drug-id">@interaction.Drug.Id</td>
+					<td class="th-c drug-name">@interaction.Drug.Name</td>
+					<td class="th-c drug-description">@interaction.Description</td>
 				</tr>
 			}
 		</table>
